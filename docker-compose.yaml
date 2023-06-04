@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  metro_db:
+    container_name: metro_db
+    image: postgres:15.2-alpine
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=root
+      - HOST="127.0.0.1"
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+
+  back_api:
+    container_name: back_api
+    restart: unless-stopped
+    build:
+      context: ./app/
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    command: uvicorn main:app --workers 1 --host 0.0.0.0 --port 8080
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    # environment:
+    # - HOST="127.0.0.1"
+    depends_on:
+      - metro_db
+
+  front_site:
+    container_name: front_site
+    build:
+      context: ./metro-front/
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    expose: 
+      - 80
+    environment:
+      - HOST="0.0.0.0"

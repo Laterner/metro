@@ -1,0 +1,26 @@
+.App-link {
+    color: #61dafb;
+}
+
+#root {
+    min-height: 100vh;/* fill the screen height to allow vertical alignement */
+    display:flex;
+}
+
+.App-conteiner {
+    width: 800px;
+    margin: auto; 
+}
+
+ul::-webkit-scrollbar {
+    width: 10px;               /* ширина scrollbar */
+}
+ul::-webkit-scrollbar-track {
+    background-color: #fff;      /* цвет дорожки */
+}
+ul::-webkit-scrollbar-thumb {
+    background-color: #dddddd;    /* цвет плашки */
+    border-radius: 60px;       /* закругления плашки */
+    min-height: 35px;
+    max-height: 150px;
+}

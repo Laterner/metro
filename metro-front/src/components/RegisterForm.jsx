@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { TextField, Button, Box, Stack } from '@mui/material';
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 const API_URL = "http://localhost:8080"

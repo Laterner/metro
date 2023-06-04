@@ -8,7 +8,7 @@ export default function SendForm() {
     const [searchResults, setSearchResults] = useState([]);
     
     useEffect(() => {
-        fetch("http://localhost:8080/")
+        fetch("http://localhost:8080/get_stations")
         .then((res) => res.json())
         .then((data) => setStations(data))
         .catch((err) => console.log(err.message));

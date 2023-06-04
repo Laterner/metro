@@ -8,30 +8,7 @@ import Main from './components/Main';
 import SendForm from './components/SendForm'
 import DashBoard from './components/DashBoard'
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Main />,
-    },
-    {
-        path: "/register",
-        element: <RegisterForm />,
-    },
-    {
-        path: "/login",
-        element: <LoginForm />,
-    },
-    {
-        path: "/send",
-        element: <SendForm />,
-    },
-    {
-        path: "/admin",
-        element: <DashBoard />,
-    },
-]);
 
-  
 function App() {    
     return (
         <Router>

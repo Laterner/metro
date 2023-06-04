@@ -2,10 +2,9 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
-import json
 from js import stations_json
 
-import database as db
+import schemas as db
 
 app = FastAPI()
 
@@ -24,6 +23,10 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return RedirectResponse("/docs")
+
+@app.get('/get_stations')
+def get_stations():
+    return stations_json
 
 @app.post('/init_database/')
 def init_database():

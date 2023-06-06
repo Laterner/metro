@@ -1,17 +1,31 @@
-.App-link {
-    color: #61dafb;
+:root {
+    --main-color: #a94343;
+}
+
+.hidden {
+    display: none;
 }
 
 #root {
     min-height: 100vh;/* fill the screen height to allow vertical alignement */
     display:flex;
 }
+body {
+    background-image: url("background.png");
+    background-repeat:no-repeat;
+    background-size:cover;
+}
 
 .App-conteiner {
     width: 800px;
     margin: auto; 
+    background-color: #f5f5f5c2;
+    padding: 20px;
+    border-radius: 20px;
 }
-
+.App-conteiner * {
+    color: var(--main-color);
+}
 ul::-webkit-scrollbar {
     width: 10px;               /* ширина scrollbar */
 }
@@ -24,3 +38,52 @@ ul::-webkit-scrollbar-thumb {
     min-height: 35px;
     max-height: 150px;
 }
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.main-menu {
+    list-style: none;
+    margin: 0;
+    padding: 15px 0 5px;
+    text-align: center;
+    background: white;
+    width: 100vw;
+    position: absolute;
+  }
+.main-menu li {display: inline-block;}
+.main-menu li:after {
+    content: "|";
+    color: #606060;
+    display: inline-block;
+    vertical-align:top;
+}
+.main-menu li:last-child:after {content: none;}
+.main-menu a {
+    text-decoration: none;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 20px;
+    margin: 0 34px 0 30px;
+    font-size: 17px;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: color .2s;
+}
+.main-menu a, .main-menu a:visited {color: #9d999d;}
+.main-menu a.current, .main-menu a:hover{color: var(--main-color);}
+.main-menu a:before,
+.main-menu a:after {
+    content: "";
+    position: absolute;
+    height: 4px;
+    top: auto;
+    right: 50%;
+    bottom: -5px;
+    left: 50%;
+    background: #b93a3a;
+    transition: .8s;
+}
+.main-menu a:hover:before, .main-menu .current:before {left: 0;}
+.main-menu a:hover:after, .main-menu .current:after {right: 0;}   

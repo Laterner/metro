@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +16,11 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Menu from './menu.svg'
 import Menu2 from './menu2.svg'
+import { grey } from '@mui/material/colors';
+import UsersList from './UsersList';
+import RequestsList from './RequestsList';
+
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -70,6 +76,9 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const [currentPage, setCurrentPage] = React.useState(< UsersList />)
+  const [currentPageName, setCurrentPageName] = React.useState('Список пользователей')
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -80,18 +89,18 @@ export default function Dashboard() {
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
+            {/* <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: '0',
                 ...(open && { display: 'none' }),
               }}
             >
                 <img src={Menu}/>
-            </IconButton>
+            </IconButton> */}
             
             <Typography
               component="h1"
@@ -100,7 +109,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              {currentPageName}
             </Typography>
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -117,65 +126,49 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            Панель управления
+            {/* <IconButton onClick={toggleDrawer}>
             <img src={Menu2} />
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
           <Divider />
           <List component="nav">
-            Bello1
+            <ListItem sx={{
+              cursor: 'pointer'
+            }}
+            onClick={() => {
+              setCurrentPage(<UsersList />)
+              setCurrentPageName('Список пользователей')
+            }}>
+                Список пользователей
+              </ListItem>
+
             <Divider sx={{ my: 1 }} />
-            Bello2
+
+            <ListItem sx={{
+              cursor: 'pointer'
+            }}
+            onClick={() => {
+              setCurrentPage(<RequestsList />)
+              setCurrentPageName('Список заявок')
+            }}>
+              Список заявок
+              </ListItem>
           </List>
         </Drawer>
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            backgroundColor: '#f5f5f5',
             flexGrow: 1,
             height: '100vh',
-            overflow: 'auto',
+            width:`calc(100vw - ${drawerWidth}px)`,
+            overflow: '0 auto',
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  
-                </Paper>
-              </Grid>
-            </Grid>
+          <Container sx={{ m: 'auto', p:0 }}>
+            {currentPage}
           </Container>
         </Box>
       </Box>

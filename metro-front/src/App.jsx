@@ -12,8 +12,9 @@ import DashBoard from './components/DashBoard'
 function App() {    
     return (
         <Router>
+            <Main/>
             <Routes>
-                <Route path="/" element={<Main/>}/>
+                <Route path="/" element={<SendForm/>}/>
                 <Route path="/register" element={<RegisterForm/>}/>
                 <Route path="/login" element={<LoginForm/>}/>
                 <Route path="/send" element={<SendForm/>}/>

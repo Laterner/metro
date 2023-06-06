@@ -24,6 +24,10 @@ app.add_middleware(
 def read_root():
     return RedirectResponse("/docs")
 
+@app.post("/update_role")
+def update_role(id: int, role: str):
+    return db.update_role(id, role)
+
 @app.get('/get_stations')
 def get_stations():
     return stations_json
@@ -38,9 +42,19 @@ def reg_user(firstname: str, lastname: str, email: str, password: str):
     res = db.reg_user(firstname, lastname, email, password)
     return {'data': res}
 
+@app.post('/reg_request/')
+def reg_request(firstname: str, lastname: str, email: str, station: str, request_text: str):
+    res = db.reg_request(firstname, lastname, email, station, request_text)
+    return {'data': res}
+
 @app.get('/get_all_users/')
 def get_all_users():
     return db.get_users()
+
+
+@app.get('/get_requests/')
+def get_requests():
+    return db.get_requests()
 
 @app.get('/login/')
 def login_user(email: str, password: str):

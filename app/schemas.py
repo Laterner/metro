@@ -2,6 +2,21 @@ import init_db
 from database import get_db_connection 
 
 
+
+def update_role(id: int, role: str) -> None:
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE users SET role=%s WHERE id=%s;",
+            (role, id)
+    )
+    
+    conn.commit()
+    
+    cur.close()
+    conn.close()
+    
+    return 'updated'
+
 def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
     conn = get_db_connection()
     cur = conn.cursor()
@@ -23,6 +38,28 @@ def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
     
     return 'reged'
 
+def reg_request(firstname: str, lastname: str, email: str, station: str, request_text: str):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('INSERT INTO requests \
+            ( firstname, lastname, email, station, request_text)'
+            'VALUES (%s, %s, %s, %s, %s);',
+            (
+                firstname, 
+                lastname, 
+                email, 
+                station,
+                request_text
+            )
+    )
+    
+    conn.commit()
+    
+    cur.close()
+    conn.close()
+    
+    return 'reged'
+
 def get_users() -> list:
     conn = get_db_connection()
     if conn == None:
@@ -31,12 +68,32 @@ def get_users() -> list:
     cur = conn.cursor()
 
     
-    cur.execute('SELECT id, firstname, lastname, email FROM users;')
+    cur.execute('SELECT id, firstname, lastname, email, role FROM users ORDER BY id;')
     publisher_records = cur.fetchall()
  
-    res = {}
+    res = []
     for el in publisher_records:
-        res[el[0]] = [el[1], el[2], el[3]]
+        res.append({'id':el[0], 'firstname': el[1], 'lastname': el[2], 'email': el[3], 'role': el[4]})
+
+    cur.close()
+    conn.close()
+    
+    return res
+
+def get_requests() -> list:
+    conn = get_db_connection()
+    if conn == None:
+        return {'data': 'Error connection'}
+    
+    cur = conn.cursor()
+
+    
+    cur.execute('SELECT id, firstname, lastname, email, station FROM requests ORDER BY id;')
+    publisher_records = cur.fetchall()
+ 
+    res = []
+    for el in publisher_records:
+        res.append({'id':el[0], 'firstname': el[1], 'lastname': el[2], 'email': el[3], 'station': el[4]})
 
     cur.close()
     conn.close()

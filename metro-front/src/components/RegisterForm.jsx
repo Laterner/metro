@@ -26,11 +26,6 @@ export default function RegisterForm() {
         })
           
     }
-    useEffect(() => {
-        axios.get('/get_all_users').then((res) => {
-            console.log(res.data)
-        })
-    }, [])
     
     return (
         <React.Fragment>

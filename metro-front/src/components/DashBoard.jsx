@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React, useState} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,8 +17,8 @@ import Paper from '@mui/material/Paper';
 import Menu from './menu.svg'
 import Menu2 from './menu2.svg'
 import { grey } from '@mui/material/colors';
-import UsersList from './UsersList';
-import RequestsList from './RequestsList';
+import UsersList from './subcomponents/UsersList';
+import RequestsList from './subcomponents/RequestsList';
 import {useCookies} from 'react-cookie'
 import { useNavigate } from "react-router-dom";
 
@@ -76,13 +76,13 @@ export default function Dashboard() {
   const handleRedirect = () => {
     navigate("/admin");
   }
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const [currentPage, setCurrentPage] = React.useState() //
-  const [currentPageName, setCurrentPageName] = React.useState('Список пользователей')
+  const [currentPage, setCurrentPage] = useState(<UsersList />) //
+  const [currentPageName, setCurrentPageName] = useState('Список пользователей')
 
   const [cookies, setCookie, removeCookie] = useCookies(['login'])
   function handleLogout () {

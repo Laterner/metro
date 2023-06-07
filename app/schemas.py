@@ -104,7 +104,7 @@ def login_user(email: str, password: str):
     conn = get_db_connection()
 
     if conn == None:
-        return {'data':'incorrectPassword'}
+        return {'data':'connection lost', 'type': 'error'}
     
     cur = conn.cursor()
 
@@ -114,16 +114,25 @@ def login_user(email: str, password: str):
 
         if publisher_records.__len__() < 1:
             return {'data': 'incorrectPassword', 'type': 'error'}
+        # else:
+        #     res = {'data': email, 'type': 'successful'}
+        print("publisher_records['id']", publisher_records[0][0])
+        cur.execute(f"SELECT id, email FROM users where id={publisher_records[0][0]} AND role='admin';")
+        publisher_records = cur.fetchall()
+        if publisher_records.__len__() < 1:
+            return {'data': 'notAllowed', 'type': 'error'}
         else:
-            return {'data': email, 'type': 'successful'}
+            res = {'data': email, 'type': 'successful'}
         
     except Exception as ex:
         print(ex)
-        return {'data':'incorrectPassword'}
+        return {'data':'UnknownError', 'type': 'error'}
     
     finally:
         cur.close()
         conn.close()
+
+    return res
 
 def init_database():
     init_db.init()

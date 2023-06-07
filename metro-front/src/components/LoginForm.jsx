@@ -17,17 +17,11 @@ export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [actionMessage, setActionMessage] = useState()
     
     const handleRedirect = () => {
         navigate("/admin");
     }
-
-    // return (
-    //     <div className='App-conteiner'>
-    //         <button onClick={handleClick} type="button">click me</button>
-    //     </div>
-    // );
-
  
     function handleSubmit(event) {
         
@@ -41,6 +35,12 @@ export default function LoginForm() {
                 setCookie('login', data.data)
                 console.log('redir ' + data.data)
                 handleRedirect()
+            }
+            else if(data.data === 'incorrectPassword'){
+                setActionMessage('Неверный логин или пароль')
+            }
+            else if(data.data === 'notAllowed'){
+                setActionMessage('Аккаунт ещё не подтверждён')
             }
             else{
                 console.log('incorrectPassword')
@@ -57,8 +57,8 @@ export default function LoginForm() {
             <form 
                 onSubmit={handleSubmit} 
                 className='App-conteiner'
-                action={<Link to={API_URL + "/login"}></Link>}
             >
+                <h2>{actionMessage}</h2>
                 <h2>Вход</h2>
                 <TextField
                     type="text"

@@ -1,13 +1,13 @@
 import os
 
 try:
-    SERVER_HOSTNAME = "localhost" # os.environ["HOST"]
+    SERVER_HOSTNAME = os.environ["HOST"]
     SERVER_DATABASE = "postgres"
     SERVER_PASSWORD = "root"
     SERVER_USER = "admin"
     SERVER_PORT = "5432"
 except:
-    SERVER_HOSTNAME = "localhost"
+    SERVER_HOSTNAME = "192.168.0.106"
     SERVER_DATABASE = "postgres"
     SERVER_PASSWORD = "root"
     SERVER_USER = "admin"

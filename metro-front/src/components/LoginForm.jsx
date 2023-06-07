@@ -1,17 +1,55 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { TextField, Button, Box, Stack } from '@mui/material';
 import { Link } from "react-router-dom";
+import {useCookies} from 'react-cookie'
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 const API_URL = "http://localhost:8080"
+
+
 export default function LoginForm() {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    const navigate = useNavigate();
+
+    const [cookies, setCookie, removeCookie] = useCookies(['login'])
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    
+    const handleRedirect = () => {
+        navigate("/admin");
+    }
+
+    // return (
+    //     <div className='App-conteiner'>
+    //         <button onClick={handleClick} type="button">click me</button>
+    //     </div>
+    // );
+
  
     function handleSubmit(event) {
+        
         event.preventDefault();
-        console.log(firstName, lastName, email, password) 
+        // console.log(lastName, email, password) 
+
+        axios.get(API_URL + `/login/?email=${email}&password=${password}`)
+        .then((response) => {
+            const data = response.data
+            if (data.type != 'error' && data.data != 'incorrectPassword'){
+                setCookie('login', data.data)
+                console.log('redir ' + data.data)
+                handleRedirect()
+            }
+            else{
+                console.log('incorrectPassword')
+                removeCookie('login')
+            }
+        })
+        .catch((error) => {
+            console.log(error.response)
+        })
     }
     
     return (
@@ -23,7 +61,7 @@ export default function LoginForm() {
             >
                 <h2>Вход</h2>
                 <TextField
-                    type="email"
+                    type="text"
                     variant='outlined'
                     color='secondary'
                     label="Email"

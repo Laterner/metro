@@ -10,7 +10,7 @@ export default function RegisterForm() {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [finReg, setFinReg] = useState('')
+    const [finReg, setFinReg] = useState(false)
     
     function handleSubmit(e) {
         e.preventDefault();
@@ -18,15 +18,21 @@ export default function RegisterForm() {
         axios.post(`${API_URL}/reg_user?firstname=${firstName}&lastname=${lastName}&email=${email}&password=${password}`)
         .then((response) => {
             console.log(response.data);
-            setFinReg('Успех!!')
+            setFinReg(true)
         })
         .catch((error) => {
             console.log(error.response);
-            setFinReg('Ошибка регистрации')
+            setFinReg(false)
         })
           
     }
-    
+    if (finReg === true){
+        return (
+            <div className='App-conteiner'>
+                <h2>Регистрация прошла успешно, ожидайте подтверждения аккаунта.</h2>
+            </div>
+        )
+    }
     return (
         <React.Fragment>
             <form 

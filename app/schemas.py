@@ -104,7 +104,7 @@ def login_user(email: str, password: str):
     conn = get_db_connection()
 
     if conn == None:
-        return False
+        return {'data':'incorrectPassword'}
     
     cur = conn.cursor()
 
@@ -113,13 +113,13 @@ def login_user(email: str, password: str):
         publisher_records = cur.fetchall()
 
         if publisher_records.__len__() < 1:
-            return {'data': False}
+            return {'data': 'incorrectPassword', 'type': 'error'}
         else:
-            return {'data': True}
+            return {'data': email, 'type': 'successful'}
         
     except Exception as ex:
         print(ex)
-        return {'data': False}
+        return {'data':'incorrectPassword'}
     
     finally:
         cur.close()

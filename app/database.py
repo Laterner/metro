@@ -20,3 +20,6 @@ def get_db_connection():
         print(f"The error '{e}' occurred")
 
     return connection
+
+if __name__ == "__main__":
+    get_db_connection()

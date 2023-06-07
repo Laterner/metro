@@ -19,7 +19,8 @@ import Menu2 from './menu2.svg'
 import { grey } from '@mui/material/colors';
 import UsersList from './UsersList';
 import RequestsList from './RequestsList';
-
+import {useCookies} from 'react-cookie'
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -71,14 +72,35 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const handleRedirect = () => {
+    navigate("/admin");
+  }
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const [currentPage, setCurrentPage] = React.useState(< UsersList />)
+  const [currentPage, setCurrentPage] = React.useState() //
   const [currentPageName, setCurrentPageName] = React.useState('Список пользователей')
 
+  const [cookies, setCookie, removeCookie] = useCookies(['login'])
+  function handleLogout () {
+    // setCookie('login', 'asdasd')
+    // setFlagRestart('flag')
+    removeCookie('login')
+    console.log(cookies.login)
+    navigate('/login')
+  }
+
+  if(!cookies.login){
+    return(
+      <Container className='App-conteiner'>
+        <h1 style={{ textAlign:'center' }} > Вы не вошли</h1>
+      </Container>
+    )
+  }
+  
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -101,7 +123,6 @@ export default function Dashboard() {
             >
                 <img src={Menu}/>
             </IconButton> */}
-            
             <Typography
               component="h1"
               variant="h6"
@@ -115,6 +136,9 @@ export default function Dashboard() {
               <Badge badgeContent={4} color="secondary">
               </Badge>
             </IconButton> */}
+            <img src={Menu} style={{ cursor:'pointer' }} onClick={handleLogout}
+            
+            />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -126,10 +150,11 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            Панель управления
+            {cookies.login}
             {/* <IconButton onClick={toggleDrawer}>
             <img src={Menu2} />
             </IconButton> */}
+            
           </Toolbar>
           <Divider />
           <List component="nav">

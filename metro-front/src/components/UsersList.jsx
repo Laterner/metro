@@ -18,7 +18,7 @@ export default function UsersList() {
         })
         .catch((error) => {
             console.log(error.response);
-            setUsersItemList({'data':'fail'})
+            setUsersItemList(['data failed'])
         })
     }, [])
 

@@ -15,7 +15,7 @@ export default function SendForm() {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     
-    const [finReg, setFinReg] = useState('Оставьте заявку')
+    const [finReg, setFinReg] = useState('Оставьте asdзаявку')
 
     // const [selectedItem, setSelectedItem] = useState('')
     const [description, setDescription] = useState('')
@@ -41,14 +41,18 @@ export default function SendForm() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        
         console.log(searchTerm, description) 
 
         axios.post(`http://localhost:8080/reg_request/?firstname=${firstName}&lastname=${lastName}&email=${email}&station=${searchTerm}&request_text=${description}`)
         .then((response) => {
             let data = response.data
-            if (data === 'reged'){
-                console.log(data);
+            if (data.data === 'reged'){
+                console.log('Заявка успешно отправлена!' + data);
                 setFinReg('Заявка успешно отправлена!')
+            }
+            else{
+                console.log(data)
             }
         })
         .catch((error) => {
@@ -64,7 +68,7 @@ export default function SendForm() {
             >
                 
             <h2>{finReg}</h2>
-            <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
+            <Stack spacing={3} direction="row" sx={{marginBottom: 4}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -85,8 +89,7 @@ export default function SendForm() {
                         fullWidth
                         required
                     />
-                </Stack>
-                <TextField
+                    <TextField
                     type="email"
                     variant='outlined'
                     color='secondary'
@@ -97,6 +100,8 @@ export default function SendForm() {
                     required
                     sx={{mb: 4}}
                 />
+                </Stack>
+                
             <TextField id="standard-basic"
                 sx={{
                     width:'100%',
@@ -139,7 +144,8 @@ export default function SendForm() {
                     value={description}
                     sx={{
                         width:'100%',
-                        marginBottom: '30px'
+                        height:'200px',
+                        marginBottom: '70px'
                     }}
                 />
                 <Box display="flex" justifyContent="right" >

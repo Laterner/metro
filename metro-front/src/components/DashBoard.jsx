@@ -162,7 +162,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container sx={{ m: 'auto', p:0 }}>
+          <Container sx={{ m: 'auto', p:0, height:'800px', overflowY:'auto'}}>
             {currentPage}
           </Container>
         </Box>

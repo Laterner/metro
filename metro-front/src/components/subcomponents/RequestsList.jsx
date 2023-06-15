@@ -68,12 +68,11 @@ export default function RequestList() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...style, width: 400 }}>
-                    <h2 id="parent-modal-title">Text in a modal</h2>
+                    <h2 id="parent-modal-title">Станция: {req.station}</h2>
                     <p id="parent-modal-description">
                         Имя: {req.firstname}<br/>
                         Фамилия: {req.lastname}<br/>
                         Email: {req.email}<br/>
-                        Станция: {req.station}<br/>
                         Запрос: {req.requestText}<br/>
                     </p>
                     <button onClick={handleClose}>Закрыть</button>

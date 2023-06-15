@@ -8,7 +8,7 @@ const API_URL = "http://localhost:8080"
 
 export default function UsersList() {
     const [usersItemList, setUsersItemList] = useState([])
-    
+
     useEffect(() => {
         axios.get(`${API_URL}/get_all_users`)
         .then((response) => {
@@ -37,6 +37,7 @@ export default function UsersList() {
             console.log('Ошибка регистрации')
         })
     }
+
 
     const listItems = usersItemList.map((el) => (
         <Paper sx={{ m: '20px auto', p: 1 }}>

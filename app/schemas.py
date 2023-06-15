@@ -26,7 +26,7 @@ def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
             (
                 firstname, 
                 lastname, 
-                email, 
+                email,  
                 password
             )
     )
@@ -99,6 +99,26 @@ def get_requests() -> list:
     conn.close()
     
     return res
+
+def get_request(id: int) -> list:
+    conn = get_db_connection()
+    if conn == None:
+        return {'data': 'Error connection'}
+    
+    cur = conn.cursor()
+
+    
+    cur.execute(f"SELECT id, firstname, lastname, email, station, request_text FROM requests WHERE id='{id}';")
+    publisher_records = cur.fetchall()
+ 
+    res = []
+    for el in publisher_records:
+        res.append({'id':el[0], 'firstname': el[1], 'lastname': el[2], 'email': el[3], 'station': el[4], 'requestText': el[5]})
+
+    cur.close()
+    conn.close()
+    
+    return res[0]
 
 def login_user(email: str, password: str):
     conn = get_db_connection()

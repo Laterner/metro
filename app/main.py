@@ -56,6 +56,10 @@ def get_all_users():
 def get_requests():
     return db.get_requests()
 
+@app.get('/get_request/')
+def get_request(id: int):
+    return db.get_request(id)
+
 @app.get('/login/')
 def login_user(email: str, password: str):
     return db.login_user(email, password)

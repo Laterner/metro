@@ -15,6 +15,7 @@ export default function RegisterForm() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log('lets: ', firstName, lastName, email, password)
+        
         axios.post(`${API_URL}/reg_user?firstname=${firstName}&lastname=${lastName}&email=${email}&password=${password}`)
         .then((response) => {
             console.log(response.data);
@@ -38,7 +39,6 @@ export default function RegisterForm() {
             <form 
                 onSubmit={handleSubmit} 
                 className='App-conteiner'
-                action={<Link to={"/login"}></Link>}
             >
                 <h1>{finReg}</h1>
                 <h2>Регистрация</h2>

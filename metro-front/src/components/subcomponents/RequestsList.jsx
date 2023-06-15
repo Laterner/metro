@@ -25,9 +25,9 @@ export default function RequestList() {
       const [open, setOpen] = React.useState(false);
       const [req, setReq] = React.useState({id: 'loading', firstname: 'loading', lastname: 'loading', email: 'loading', station: 'loading', requestText: 'loading'});
 
-      const handleOpen = () => {
+      const handleOpen = (id) => {
         setOpen(true)
-        axios.get(`http://localhost:8080/get_request/?id=${1}`)
+        axios.get(`http://localhost:8080/get_request/?id=${id}`)
           .then((response) => {
               console.log(response.data);
               setReq(response.data)
@@ -53,7 +53,7 @@ export default function RequestList() {
 
 
     const listItems = usersItemList.map((el) => (
-        <Paper sx={{ m: '20px auto', p: 1 }}  onClick={handleOpen}>
+        <Paper sx={{ m: '20px auto', p: 1 }}  onClick={(e) => handleOpen(el.id)}>
             {el.id} | {el.firstname} | {el.lastname} | {el.email} | {el.station} 
         </Paper>
     ));

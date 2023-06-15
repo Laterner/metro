@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { TextField, List, ListItem, ListItemText, Divider, Box, Button } from '@mui/material';
+import { TextField, List, Stack, ListItem, ListItemText, Divider, Box, Button } from '@mui/material';
 import axios from 'axios';
 
 
@@ -10,8 +10,13 @@ export default function SendForm() {
     const [stations, setStations] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
     
-    
+    const [finReg, setFinReg] = useState('Оставьте заявку')
+
     // const [selectedItem, setSelectedItem] = useState('')
     const [description, setDescription] = useState('')
 
@@ -38,9 +43,13 @@ export default function SendForm() {
         event.preventDefault();
         console.log(searchTerm, description) 
 
-        axios.post(`http://localhost:8080/reg_request/?firstname=test&lastname=test&email=test%40test.ru&station=${searchTerm}&request_text=${description}`)
+        axios.post(`http://localhost:8080/reg_request/?firstname=${firstName}&lastname=${lastName}&email=${email}&station=${searchTerm}&request_text=${description}`)
         .then((response) => {
-            console.log(response.data);
+            let data = response.data
+            if (data === 'reged'){
+                console.log(data);
+                setFinReg('Заявка успешно отправлена!')
+            }
         })
         .catch((error) => {
             console.log(error.response);
@@ -53,7 +62,41 @@ export default function SendForm() {
                 onSubmit={handleSubmit} 
                 className=''
             >
-            <h2>Оставьте заявку</h2>
+                
+            <h2>{finReg}</h2>
+            <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='secondary'
+                        label="Имя"
+                        onChange={e => setFirstName(e.target.value)}
+                        value={firstName}
+                        fullWidth
+                        required
+                    />
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='secondary'
+                        label="Фамилия"
+                        onChange={e => setLastName(e.target.value)}
+                        value={lastName}
+                        fullWidth
+                        required
+                    />
+                </Stack>
+                <TextField
+                    type="email"
+                    variant='outlined'
+                    color='secondary'
+                    label="Email"
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    fullWidth
+                    required
+                    sx={{mb: 4}}
+                />
             <TextField id="standard-basic"
                 sx={{
                     width:'100%',

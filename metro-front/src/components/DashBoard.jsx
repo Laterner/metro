@@ -9,14 +9,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Menu from './menu.svg'
-import Menu2 from './menu2.svg'
-import { grey } from '@mui/material/colors';
 import UsersList from './subcomponents/UsersList';
 import RequestsList from './subcomponents/RequestsList';
 import {useCookies} from 'react-cookie'
@@ -77,17 +72,12 @@ export default function Dashboard() {
     navigate("/admin");
   }
   const [open, setOpen] = useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
   const [currentPage, setCurrentPage] = useState(<UsersList />) //
   const [currentPageName, setCurrentPageName] = useState('Список пользователей')
 
   const [cookies, setCookie, removeCookie] = useCookies(['login'])
   function handleLogout () {
-    // setCookie('login', 'asdasd')
-    // setFlagRestart('flag')
     removeCookie('login')
     console.log(cookies.login)
     navigate('/login')
@@ -111,18 +101,6 @@ export default function Dashboard() {
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            {/* <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '0',
-                ...(open && { display: 'none' }),
-              }}
-            >
-                <img src={Menu}/>
-            </IconButton> */}
             <Typography
               component="h1"
               variant="h6"
@@ -132,10 +110,6 @@ export default function Dashboard() {
             >
               {currentPageName}
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-              </Badge>
-            </IconButton> */}
             <img src={Menu} style={{ cursor:'pointer' }} onClick={handleLogout}
             
             />
@@ -150,11 +124,7 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            {cookies.login}
-            {/* <IconButton onClick={toggleDrawer}>
-            <img src={Menu2} />
-            </IconButton> */}
-            
+            {cookies.login}            
           </Toolbar>
           <Divider />
           <List component="nav">

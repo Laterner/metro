@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { TextField, Button, Box, Stack } from '@mui/material';
+import { TextField, Button, Box, Stack, Modal} from '@mui/material';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
@@ -11,18 +11,28 @@ export default function RegisterForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [finReg, setFinReg] = useState(false)
-    
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => setOpen(false);
+
     function handleSubmit(e) {
         e.preventDefault();
         console.log('lets: ', firstName, lastName, email, password)
         
         axios.post(`${API_URL}/reg_user?firstname=${firstName}&lastname=${lastName}&email=${email}&password=${password}`)
         .then((response) => {
-            console.log(response.data);
+            let data = response.data
+            console.log(response.data)
+            // if (data == 'emailExisting'){
+            //     setOpen(true)
+            // }
+            // if(data.data == 'reged'){
+            //     setFinReg(true)
+            // }
             setFinReg(true)
         })
         .catch((error) => {
-            console.log(error.response);
+            console.log(error.response)
             setFinReg(false)
         })
           
@@ -93,6 +103,15 @@ export default function RegisterForm() {
                     </Button>
                 </Box>
             </form>
+            {/* <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                Email существует
+                <Button variant="outlined" color="primary" onClick={handleClose} type="button">Закрыть</Button>
+            </Modal> */}
         </React.Fragment>
     );
 }

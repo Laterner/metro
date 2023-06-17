@@ -1,4 +1,5 @@
 import init_db
+from hashlib import sha256
 from database import get_db_connection 
 
 
@@ -20,6 +21,13 @@ def update_role(id: int, role: str) -> None:
 def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
     conn = get_db_connection()
     cur = conn.cursor()
+
+    cur.execute(f"SELECT * FROM users WHERE email='{email}'")
+    if cur.fetchone() != None:
+        return {'data':'emailExisting', 'type':'error'}
+    
+    hashed_password = sha256(password.encode()).hexdigest()
+
     cur.execute('INSERT INTO users \
             ( firstname, lastname, email, password )'
             'VALUES (%s, %s, %s, %s);',
@@ -27,7 +35,7 @@ def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
                 firstname, 
                 lastname, 
                 email,  
-                password
+                hashed_password
             )
     )
     
@@ -126,18 +134,17 @@ def login_user(email: str, password: str):
     if conn == None:
         return {'data':'connection lost', 'type': 'error'}
     
+    hashed_password = sha256(password.encode()).hexdigest()
     cur = conn.cursor()
 
     try:
-        cur.execute(f"SELECT id, email FROM users where email='{email}' AND password='{password}';")
-        publisher_records = cur.fetchall()
+        cur.execute(f"SELECT id, email FROM users where email='{email}' AND password='{hashed_password}';")
+        publisher_records = cur.fetchone()
 
-        if publisher_records.__len__() < 1:
+        if publisher_records == None:
             return {'data': 'incorrectPassword', 'type': 'error'}
-        # else:
-        #     res = {'data': email, 'type': 'successful'}
-        print("publisher_records['id']", publisher_records[0][0])
-        cur.execute(f"SELECT id, email FROM users where id={publisher_records[0][0]} AND role='admin';")
+
+        cur.execute(f"SELECT id, email FROM users where id={publisher_records[0]} AND role='admin';")
         publisher_records = cur.fetchall()
         if publisher_records.__len__() < 1:
             return {'data': 'notAllowed', 'type': 'error'}
@@ -158,5 +165,4 @@ def init_database():
     init_db.init()
 
 if __name__ == "__main__":
-    # print(reg_user('sasha2', 'masov2', 'email2', 'password2'))
-    print(get_users())
+    print(login_user('admin@test.ru', 'password'))

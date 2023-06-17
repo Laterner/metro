@@ -11,7 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-COPY requirements.txt .
+# COPY requirements.txt .
 RUN pip install uvicorn
 RUN pip install fastapi
 RUN pip install psycopg2-binary

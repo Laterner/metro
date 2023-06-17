@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { TextField, List, Stack, ListItem, ListItemText, Divider, Box, Button } from '@mui/material';
+import { TextField, List, Stack, ListItem, ListItemText, Divider, Box, Button, Fab } from '@mui/material';
 import axios from 'axios';
 
 
@@ -15,9 +15,8 @@ export default function SendForm() {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     
-    const [finReg, setFinReg] = useState('Оставьте asdзаявку')
+    const [finReg, setFinReg] = useState(false)
 
-    // const [selectedItem, setSelectedItem] = useState('')
     const [description, setDescription] = useState('')
 
     useEffect(() => {
@@ -49,7 +48,7 @@ export default function SendForm() {
             let data = response.data
             if (data.data === 'reged'){
                 console.log('Заявка успешно отправлена!' + data);
-                setFinReg('Заявка успешно отправлена!')
+                setFinReg(true)
             }
             else{
                 console.log(data)
@@ -59,7 +58,13 @@ export default function SendForm() {
             console.log(error.response);
         })
     }
-    
+    if (finReg === true){
+        return (
+            <div className='App-conteiner'>
+                <h2>Заявка успешно отправлена!</h2>
+            </div>
+        )
+    }
     return (
         <div className='App-conteiner' >
             <form 

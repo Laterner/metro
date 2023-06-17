@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from js import stations_json
 

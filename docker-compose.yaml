@@ -30,7 +30,7 @@ services:
     expose:
       - 8080
     environment:
-    - HOST=192.168.1.101 ## Подставить свой айпи
+    - HOST=192.168.0.106 ## Подставить свой айпи
     depends_on:
       - metro_db
 

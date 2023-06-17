@@ -10,7 +10,6 @@ import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
 import Menu from './menu.svg'
 import UsersList from './subcomponents/UsersList';
 import RequestsList from './subcomponents/RequestsList';

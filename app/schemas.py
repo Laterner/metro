@@ -44,7 +44,7 @@ def reg_user(firstname: str, lastname: str, email: str, password: str) -> None:
     cur.close()
     conn.close()
     
-    return 'reged'
+    return {'data': 'reged'}
 
 def reg_request(firstname: str, lastname: str, email: str, station: str, request_text: str):
     conn = get_db_connection()

@@ -11,20 +11,20 @@ export default function RegisterForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [finReg, setFinReg] = useState(false)
-    const [error, setError] = useState('лрллр')
+    const [error, setError] = useState('')
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log('lets: ', firstName, lastName, email, password)
+        // console.log('lets: ', firstName, lastName, email, password)
         
         axios.post(`${API_URL}/reg_user?firstname=${firstName}&lastname=${lastName}&email=${email}&password=${password}`)
         .then((response) => {
             let data = response.data
-            if (data === 'emailExisting'){
-            console.log(response.data)
-            setError('Email уже существует')
+            // console.log(data.data)
+            if (data.data === 'emailExisting'){
+                setError('Email уже существует')
             }
-            if(data.data == 'reged'){
+            else if(data.data === 'reged'){
                 setFinReg(true)
             }
         })

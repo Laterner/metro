@@ -39,8 +39,7 @@ def init_database():
 
 @app.post('/reg_user/')
 def reg_user(firstname: str, lastname: str, email: str, password: str):
-    res = db.reg_user(firstname, lastname, email, password)
-    return {'data': res}
+    return db.reg_user(firstname, lastname, email, password)
 
 @app.post('/reg_request/')
 def reg_request(firstname: str, lastname: str, email: str, station: str, request_text: str):

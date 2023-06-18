@@ -76,7 +76,7 @@ def get_users() -> list:
     cur = conn.cursor()
 
     
-    cur.execute('SELECT id, firstname, lastname, email, role FROM users ORDER BY id;')
+    cur.execute('SELECT id, firstname, lastname, email, role FROM users WHERE NOT id=1 ORDER BY id;')
     publisher_records = cur.fetchall()
  
     res = []

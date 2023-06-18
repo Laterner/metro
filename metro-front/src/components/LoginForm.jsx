@@ -43,7 +43,7 @@ export default function LoginForm() {
                 setActionMessage('Аккаунт ещё не подтверждён')
             }
             else{
-                console.log('Ошибка сервера')
+                setActionMessage('Ошибка сервера')
                 removeCookie('login')
             }
         })

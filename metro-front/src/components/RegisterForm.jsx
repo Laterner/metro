@@ -11,9 +11,7 @@ export default function RegisterForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [finReg, setFinReg] = useState(false)
-    const [open, setOpen] = useState(false);
-
-    const handleClose = () => setOpen(false);
+    const [error, setError] = useState('лрллр')
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,18 +20,16 @@ export default function RegisterForm() {
         axios.post(`${API_URL}/reg_user?firstname=${firstName}&lastname=${lastName}&email=${email}&password=${password}`)
         .then((response) => {
             let data = response.data
+            if (data === 'emailExisting'){
             console.log(response.data)
-            // if (data == 'emailExisting'){
-            //     setOpen(true)
-            // }
-            // if(data.data == 'reged'){
-            //     setFinReg(true)
-            // }
-            setFinReg(true)
+            setError('Email уже существует')
+            }
+            if(data.data == 'reged'){
+                setFinReg(true)
+            }
         })
         .catch((error) => {
             console.log(error.response)
-            setFinReg(false)
         })
           
     }
@@ -50,7 +46,7 @@ export default function RegisterForm() {
                 onSubmit={handleSubmit} 
                 className='App-conteiner'
             >
-                <h1>{finReg}</h1>
+                <h1>{error}</h1>
                 <h2>Регистрация</h2>
                 <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
                     <TextField
@@ -102,16 +98,8 @@ export default function RegisterForm() {
                         Зарегистрироваться
                     </Button>
                 </Box>
+                
             </form>
-            {/* <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                Email существует
-                <Button variant="outlined" color="primary" onClick={handleClose} type="button">Закрыть</Button>
-            </Modal> */}
         </React.Fragment>
     );
 }

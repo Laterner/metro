@@ -61,7 +61,7 @@ export default function LoginForm() {
                 <h2>{actionMessage}</h2>
                 <h2>Вход</h2>
                 <TextField
-                    type="text"
+                    type="Email"
                     variant='outlined'
                     color='secondary'
                     label="Email"
